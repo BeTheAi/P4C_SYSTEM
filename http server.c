@@ -54,7 +54,7 @@ int main() {
         "Content-Length: 200\r\n"
         "Content-Type: text/html\r\n"
         "\r\n"
-        "호출된 기본 페이지\\n");
+        "Client 응답용 페이지\\n");
 
 
     while (1) {
