@@ -6,22 +6,20 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <tchar.h>
-#define WIN32_LEAN_AND_MEAN
-
 // WIN
 #include <Windows.h>
-
 // NETWORK
 #include <winsock2.h>
 #include <mswsock.h>
 #include <ws2tcpip.h>
-#pragma comment(lib, "ws2_32.lib") 
+#pragma comment(lib, "ws2_32.lib")
+#define WIN32_LEAN_AND_MEAN
 #define BUF_SIZE 2048
 
 int main() {
-    int port= 2814;
+    int port= 2814;                 
     SOCKET lsock, asock;
-    SOCKADDR_IN addrIn, remote_sin; . 
+    SOCKADDR_IN addrIn, remote_sin;
     
     WSADATA wsa;
     if (WSAStartup(MAKEWORD(2, 2), &wsa) != 0)
@@ -38,12 +36,12 @@ int main() {
     addrIn.sin_addr.s_addr = htonl(INADDR_ANY);
 
     if (bind(lsock, (struct SOCKADDR*)&addrIn, sizeof(addrIn)) == SOCKET_ERROR) {
-        printf("[ERR] failed to bind lsock.\n");
+        printf(" 오류 : 바인딩 실패. \n");
         return;
     }
 
     if (listen(lsock, 10) == SOCKET_ERROR) {
-        printf("[ERR] failed to listen lsock.\n");
+        printf(" 오류 : listen 실패.\n");
         return;
     }
 
@@ -62,7 +60,7 @@ int main() {
         int addrLen = sizeof(SOCKADDR);
         asock = accept(lsock, (SOCKADDR*)&remote_sin, &addrLen);
         if (asock == INVALID_SOCKET) {
-            perror("[ERR] failed to accept.\n");
+            perror(" 오류 : Accpet 실패.\n");
             printf("%d", GetLastError());
         }
         else
@@ -72,7 +70,7 @@ int main() {
                 char input[BUF_SIZE];
                 int len = BUF_SIZE;
                 int inputLen = recv(asock, input, len, 0);
-                if (inputLen <= 0)
+                if (inputLen <= 0) 
                     break;
                 else 
                     send(asock, szBuf, (int)strlen(szBuf), 0);
